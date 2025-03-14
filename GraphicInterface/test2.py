@@ -1,5 +1,4 @@
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QHBoxLayout
-from PySide6.QtGui import QPixmap
 import sys
 
 class MyWindow(QWidget):
@@ -18,17 +17,17 @@ class MyWindow(QWidget):
 
         self.plant_buttons = []
         self.plant_data = {
-            "Basilic": ("Eau: 💧💧", "Température: 22°C", "Qualité de l'air: 😊"),
-            "Menthe": ("Eau: 💧", "Température: 18°C", "Qualité de l'air: 😀"),
-            "Fraise": ("Eau: 💧💧💧", "Température: 20°C", "Qualité de l'air: 😁"),
-            "Feuilles": ("Eau: 💧💧", "Température: 19°C", "Qualité de l'air: 🙂"),
-            "Fleurs": ("Eau: 💧💧💧", "Température: 23°C", "Qualité de l'air: 😊")
+            "Basilic": ("Eau: 💧💧", "Température: 22°C", "Qualité de l'air: 🙂"),
+            "Menthe": ("Eau: 💧", "Température: 18°C", "Qualité de l'air: 😃"),
+            "Fraise": ("Eau: 💧💧💧", "Température: 20°C", "Qualité de l'air: 😆"),
+            "Feuilles": ("Eau: 💧💧", "Température: 19°C", "Qualité de l'air: ☺"),
+            "Fleurs": ("Eau: 💧💧💧", "Température: 23°C", "Qualité de l'air: 🙂")
         }
 
         for name in self.plant_data.keys():
             button = QPushButton(name)
             button.setStyleSheet("font-size: 14px; padding: 10px;")
-            button.clicked.connect(lambda checked, n=name: self.select_plant(n))
+            button.clicked.connect(self.make_callback(name))  
             plants_layout.addWidget(button)
             self.plant_buttons.append(button)
 
@@ -50,6 +49,9 @@ class MyWindow(QWidget):
 
         main_layout.addLayout(self.info_layout)
         self.setLayout(main_layout)
+
+    def make_callback(self, plant_name):
+        return lambda: self.select_plant(plant_name)
 
     def select_plant(self, plant_name):
         water, temperature, air_quality = self.plant_data[plant_name]
