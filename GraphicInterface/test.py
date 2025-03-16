@@ -1,12 +1,14 @@
+import os
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QHBoxLayout
 from PySide6.QtGui import QPixmap, QPalette
+from PySide6.QtCore import Qt
 import sys
 
 class MyWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Sélection de Plantes")
-        self.setGeometry(100, 100, 600, 400)
+        self.setGeometry(100, 100, 600, 397)
 
         # Appliquer l'image de fond via QPixmap et QPalette
         self.set_background_image()
@@ -15,6 +17,7 @@ class MyWindow(QWidget):
 
         # Créer le label avant d'appliquer le style
         self.label = QLabel("Sélectionner votre type de plantes :")
+        self.label.setAlignment(Qt.AlignHCenter)
         self.label.setStyleSheet("font-size: 22px; font-weight: bold; color: green; text-align: center;")
         main_layout.addWidget(self.label)
 
@@ -49,9 +52,20 @@ class MyWindow(QWidget):
         self.setLayout(main_layout)
 
     def set_background_image(self):
-        # Charger l'image en utilisant QPixmap
-        pixmap = QPixmap("/wsl.localhost/Ubuntu/home/ju456/SmartyPot/GraphicInterface/backgroung.png")
+        # Chemin absolu du fichier (assurez-vous que le fichier est dans ce répertoire)
+        image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "background.png")
         
+        # Vérifiez le chemin complet de l'image
+        print(f"Chemin de l'image : {image_path}")
+
+        # Charger l'image en utilisant QPixmap
+        pixmap = QPixmap(image_path)
+
+        # Vérifier si l'image a bien été chargée
+        if pixmap.isNull():
+            print("Erreur : l'image de fond n'a pas pu être chargée.")
+            return
+
         # Créer un QPalette et y appliquer l'image de fond
         palette = self.palette()
         palette.setBrush(self.backgroundRole(), pixmap)
