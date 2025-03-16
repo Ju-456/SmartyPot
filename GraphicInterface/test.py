@@ -27,8 +27,8 @@ class MyWindow(QWidget):
             "Basilic": ("Eau: 💧💧", "Température: 22°C", "Qualité de l'air: 🙂"),
             "Menthe": ("Eau: 💧", "Température: 18°C", "Qualité de l'air: 😃"),
             "Fraise": ("Eau: 💧💧💧", "Température: 20°C", "Qualité de l'air: 😆"),
-            "Feuilles": ("Eau: 💧💧", "Température: 19°C", "Qualité de l'air: ☺"),
-            "Fleurs": ("Eau: 💧💧💧", "Température: 23°C", "Qualité de l'air: 🙂")
+            "Orchidée": ("Eau: 💧💧", "Température: 19°C", "Qualité de l'air: ☺"),
+            "Begonia": ("Eau: 💧💧💧", "Température: 23°C", "Qualité de l'air: 🙂")
         }
 
         # Boutons pour chaque plante
