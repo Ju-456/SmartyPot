@@ -18,7 +18,7 @@ class MyWindow(QWidget):
         # Créer le label avant d'appliquer le style
         self.label = QLabel("Sélectionner votre type de plantes :")
         self.label.setAlignment(Qt.AlignHCenter)
-        self.label.setStyleSheet("font-size: 22px; font-weight: bold; color: green; text-align: center;")
+        self.label.setStyleSheet("font-size: 22px; font-weight: bold; color: green; text-align: center; margin-top: 20px;")
         main_layout.addWidget(self.label)
 
         plants_layout = QHBoxLayout()
@@ -34,7 +34,15 @@ class MyWindow(QWidget):
         # Boutons pour chaque plante
         for name in self.plant_data.keys():
             button = QPushButton(name)
-            button.setStyleSheet("font-size: 14px; padding: 10px; background-color: white; border-radius: 15px;")
+            button.setFixedSize(88, 88)  # Taille fixe des boutons
+
+            button.setStyleSheet("""
+                font-size: 14px;
+                background-color: white;
+                border-radius: 44px;  /* La moitié de 88px pour un bouton rond */
+                border: 2px solid green;
+            """)
+
             button.clicked.connect(self.make_callback(name))
             plants_layout.addWidget(button)
 
