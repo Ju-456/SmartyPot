@@ -8,7 +8,7 @@ class MyWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Sélection de Plantes")
-        self.setGeometry(100, 100, 600, 397)
+        self.setGeometry(100, 100, 600, 402)
 
         # Appliquer l'image de fond via QPixmap et QPalette
         self.set_background_image()
@@ -23,10 +23,12 @@ class MyWindow(QWidget):
 
         plants_layout = QHBoxLayout()
 
+        # Utilisation de chemins relatifs pour les images, pcq je suis pas une collaboratrice relou ;)) 
+        #current_directory = os.path.dirname(os.path.abspath(__file__))
         self.plant_data = {
             "Basilic": ("Eau: 💧💧", "Température: 22°C", "Qualité de l'air: 🙂"),
             "Menthe": ("Eau: 💧", "Température: 18°C", "Qualité de l'air: 😃"),
-            "Fraise": ("Eau: 💧💧💧", "Température: 20°C", "Qualité de l'air: 😆"),
+            "Fraise": ("Eau: 💧💧💧", "Température: 20°C", "Qualité de l'air: 😆"),#, os.path.join(current_directory, "FraisePicture.png")
             "Orchidée": ("Eau: 💧💧", "Température: 19°C", "Qualité de l'air: ☺"),
             "Begonia": ("Eau: 💧💧💧", "Température: 23°C", "Qualité de l'air: 🙂")
         }
@@ -41,7 +43,7 @@ class MyWindow(QWidget):
                 background-color: white;
                 border-radius: 44px;  /* La moitié de 88px pour un bouton rond */
                 border: 2px solid green;
-            """)
+            """)# margin-top: 20px;  /* Ajout d'un espacement au-dessus du bouton mais ça ne fonctionne pas*/
 
             button.clicked.connect(self.make_callback(name))
             plants_layout.addWidget(button)
@@ -63,8 +65,7 @@ class MyWindow(QWidget):
         # Chemin absolu du fichier (assurez-vous que le fichier est dans ce répertoire)
         image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "background.png")
         
-        # Vérifiez le chemin complet de l'image
-        print(f"Chemin de l'image : {image_path}")
+        # Vérifiez le chemin complet de l'image, print(f"Chemin de l'image : {image_path}")
 
         # Charger l'image en utilisant QPixmap
         pixmap = QPixmap(image_path)
