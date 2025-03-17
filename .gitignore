@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+#Development environment
+mon_env/
+venv/
