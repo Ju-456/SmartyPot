@@ -89,7 +89,7 @@ class MyWindow(QWidget):
         # Créer une nouvelle fenêtre avec les informations sur la plante
         self.new_window = QWidget()
         self.new_window.setGeometry(100, 100, 600, 402) # Mode plein écran remplacé temporairement par la taille avec laquelle on travaille
-        self.set_background_image_for_window(self.new_window)
+        #self.set_background_image_for_window(self.new_window)
         
         layout = QVBoxLayout()
 
