@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QHBoxLayout
 from PySide6.QtGui import QFont
 from PySide6.QtCore import Qt, QTimer
+from PySide6.QtGui import QPixmap
 #from ky028 import *
 #from lumiere import *
 #from mq135 import *
@@ -14,7 +15,7 @@ class MyWindow(QWidget):
         super().__init__()
         self.setWindowTitle("Sélection de Plantes")
         self.setGeometry(100, 100, 600, 402) # setGeometry(x, y, width, height) - Mode plein écran remplacé temporairement par la taille avec laquelle on travaille
-
+        self.set_background_image()
         self.choosed_plant = ""
 
         main_layout = QVBoxLayout()
@@ -76,27 +77,6 @@ class MyWindow(QWidget):
 
         self.setLayout(main_layout)
 
-    def set_background_image(self):
-        # Chemin absolu du fichier (assurez-vous que le fichier est dans ce répertoire)
-        image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "background.png")
-        
-        # Vérifiez le chemin complet de l'image, print(f"Chemin de l'image : {image_path}")
-
-        # Charger l'image en utilisant QPixmap
-        pixmap = QPixmap(image_path)
-
-        # Vérifier si l'image a bien été chargée
-        if pixmap.isNull():
-            print("Erreur : l'image de fond n'a pas pu être chargée.")
-            return
-
-        # Créer un QPalette et y appliquer l'image de fond
-        palette = self.palette()
-        palette.setBrush(self.backgroundRole(), pixmap)
-        
-        # Appliquer le QPalette à la fenêtre
-        self.setPalette(palette)
-
     def select_plant(self, plant_name):
         self.choosed_plant = plant_name
 
@@ -109,7 +89,8 @@ class MyWindow(QWidget):
         # Créer une nouvelle fenêtre avec les informations sur la plante
         self.new_window = QWidget()
         self.new_window.setGeometry(100, 100, 600, 402) # Mode plein écran remplacé temporairement par la taille avec laquelle on travaille
-
+        self.set_background_image_for_window(self.new_window)
+        
         layout = QVBoxLayout()
 
         info_title = f"A savoir sur... {self.choosed_plant}"  
@@ -276,6 +257,27 @@ class MyWindow(QWidget):
         self.humidity_sensor_label.setText(f"Humidité : {humidity_value:.2f}%")
         self.light_sensor_label.setText(f"Luminosité: {lux_value:.2f}%")
         self.air_quality_label.setText(f"Qualité de l'air : {air_quality_value}")
+
+    def set_background_image(self):
+        # Chemin absolu du fichier (assurez-vous que le fichier est dans ce répertoire)
+        image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "background.png")
+        
+        # Vérifiez le chemin complet de l'image, print(f"Chemin de l'image : {image_path}")
+
+        # Charger l'image en utilisant QPixmap
+        pixmap = QPixmap(image_path)
+
+        # Vérifier si l'image a bien été chargée
+        if pixmap.isNull():
+            print("Erreur : l'image de fond n'a pas pu être chargée.")
+            return
+
+        # Créer un QPalette et y appliquer l'image de fond
+        palette = self.palette()
+        palette.setBrush(self.backgroundRole(), pixmap)
+        
+        # Appliquer le QPalette à la fenêtre
+        self.setPalette(palette)
 
     def quit_application(self):
         QApplication.quit()
