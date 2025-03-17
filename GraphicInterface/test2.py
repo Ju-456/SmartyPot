@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QHBoxLayout
 from PySide6.QtGui import QPixmap
 import sys
+import os
 
 class MyWindow(QWidget):
     def __init__(self):
