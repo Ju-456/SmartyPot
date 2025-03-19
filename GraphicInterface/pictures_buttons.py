@@ -49,7 +49,7 @@ class MyWindow(QWidget):
             button = QPushButton("")
             button.setFixedSize(88, 88)
             image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), image_file)
-            print(f"Le chemin de l'image pour {name} est : {image_path}")
+            
             button.setStyleSheet(f"""
                 QPushButton {{
                 border-radius: 44px;
