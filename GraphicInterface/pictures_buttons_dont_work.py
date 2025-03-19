@@ -35,37 +35,29 @@ class MyWindow(QWidget):
 
         plants_layout = QHBoxLayout()
 
-        self.plant_buttons = []
-        self.plant_data = {
+        self.plant_images = {
             "Basilic": "basilic.png",
             "Menthe": "menthe.png",
             "Fraise": "fraise.png",
             "Orchidées": "orchidées.png",
-            "Bégonias": "bégonias.png"
+            "Bégonias": "begonias.png"
         }
 
-        for name, image_file in self.plant_data.items():
-            button = QPushButton(name)
-            button.setFont(QFont("Arial", 15))
-            button.setFixedSize(88, 88)  # Taille fixe des boutons
-            button.setStyleSheet("""
-                font-size: 14px;
-                background-color: white;
-                border-radius: 44px;
-                border: 2px solid green;
-                text-align: center; 
-            """)
+        self.plant_buttons = []
 
-            # Charger l'image pour chaque bouton
+        for name, image_file in self.plant_images.items():
+            button = QPushButton("")
+            button.setFixedSize(88, 88)
             image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), image_file)
-            pixmap = QPixmap(image_path)
-            
-            if not pixmap.isNull():
-                # Ajouter l'image comme icône du bouton
-                button.setIcon(QIcon(pixmap))
-                button.setIconSize(pixmap.size())  # Ajuste la taille de l'icône à la taille de l'image
-                #icon_size = button.size().height() * 9  # Taille réduite de l'icône pour correspondre au bouton
-                #button.setIconSize(pixmap.scaledToWidth(icon_size).size())  # Redimensionne l'icône proportionnellement à la taille du bouton
+
+            button.setStyleSheet(f"""
+                QPushButton {{
+                border-radius: 44px;
+                background-image: url({image_path});
+                background-position: center;
+                background-repeat: no-repeat;
+            }}
+        """)
 
             button.clicked.connect(lambda checked, n=name: self.select_plant(n))
             plants_layout.addWidget(button)

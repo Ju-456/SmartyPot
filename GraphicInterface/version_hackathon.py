@@ -1,42 +1,66 @@
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QHBoxLayout
-from PySide6.QtGui import QFont
-from PySide6.QtCore import Qt, QTimer
-from ky028 import *
-from lumiere import *
-from mq135 import *
-from humidite import *
+from PySide6.QtGui import QFont, QPixmap, QPalette, QBrush
+from PySide6.QtCore import Qt
 import sys
-import random  # Utilisé pour simuler la lecture d'un capteur
+import os
 
 class MyWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Sélection de Plantes")
-        self.showFullScreen()  # Mode plein écran
-
+        self.setGeometry(100, 100, 600, 402)
+        self.set_background_image()
         self.choosed_plant = ""
 
         main_layout = QVBoxLayout()
 
         self.label = QLabel("Sélectionner votre type de plantes :")
-        self.label.setFont(QFont("Arial", 24, QFont.Bold))
+        self.label.setAlignment(Qt.AlignHCenter)
+        self.label.setStyleSheet("""
+            font-size: 20px; 
+            font-weight: bold; 
+            color: green; 
+            text-align: center; 
+            margin-top: 20px;
+        """)
         main_layout.addWidget(self.label)
 
         plants_layout = QHBoxLayout()
 
-        self.plant_buttons = []
         self.plant_data = {
-            "Basilic": ("Difficulté: ⭐⭐", "Eau: Fréquemment"),
-            "Menthe": ("Difficulté: ⭐", "Eau: Rarement"),
-            "Fraise": ("Difficulté: ⭐⭐⭐", "Eau: Très Fréquemment"),
-            "Feuilles": ("Difficulté: ⭐⭐", "Eau: Fréquemment"),
-            "Fleurs": ("Difficulté: ⭐⭐⭐", "Eau: Très Fréquemment")
+            "Basilic": ("Difficulté: ⭐⭐", "Eau: 💧💧"),
+            "Menthe": ("Difficulté: ⭐", "Eau: 💧"),
+            "Fraise": ("Difficulté: ⭐⭐⭐", "Eau: 💧💧💧"),
+            "Orchidées": ("Difficulté: ⭐⭐", "Eau: 💧💧"),
+            "Bégonias": ("Difficulté: ⭐⭐⭐", "Eau: 💧💧💧")
         }
 
-        for name in self.plant_data.keys():
-            button = QPushButton(name)
-            button.setFont(QFont("Arial", 20))
-            button.setFixedSize(100, 80)  # Taille adaptée aux petits écrans
+        self.plant_images = {
+            "Basilic": "basilic.png",
+            "Menthe": "menthe.png",
+            "Fraise": "fraise.png",
+            "Orchidées": "orchidées.png",
+            "Bégonias": "begonias.png"
+        }
+
+        self.plant_buttons = []
+
+        for name, image_file in self.plant_images.items():
+            button = QPushButton("")
+            button.setFixedSize(88, 88)
+            image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), image_file)
+
+            button.setStyleSheet(f"""
+                QPushButton {{
+                    border-radius: 44px;
+                    border: 2px solid green;
+                    background-image: url({image_path});
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                }}
+            """)
+
             button.clicked.connect(lambda checked, n=name: self.select_plant(n))
             plants_layout.addWidget(button)
             self.plant_buttons.append(button)
@@ -44,29 +68,43 @@ class MyWindow(QWidget):
         main_layout.addLayout(plants_layout)
 
         self.difficulty_label = QLabel("Difficulté: -")
-        self.difficulty_label.setFont(QFont("Arial", 20))
+        self.difficulty_label.setFont(QFont("Arial", 18))
+        self.difficulty_label.setStyleSheet("font-size: 17px; color: green;")
         main_layout.addWidget(self.difficulty_label)
 
         self.water_label = QLabel("Eau: -")
-        self.water_label.setFont(QFont("Arial", 20))
+        self.water_label.setFont(QFont("Arial", 18))
+        self.water_label.setStyleSheet("font-size: 17px; color: green;")
         main_layout.addWidget(self.water_label)
 
         self.next_button = QPushButton("Suivant")
-        self.next_button.setFont(QFont("Arial", 20))
-        self.next_button.setFixedSize(200, 90)
+        self.next_button.setFont(QFont("Arial", 10))
+        self.next_button.setFixedSize(100, 50)
         self.next_button.setVisible(False)
         self.next_button.clicked.connect(self.open_new_page)
         main_layout.addWidget(self.next_button)
 
         self.setLayout(main_layout)
 
+    def set_background_image(self):
+        image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "background.png")
+        pixmap = QPixmap(image_path)
+
+        if pixmap.isNull():
+            print("Erreur : l'image de fond n'a pas pu être chargée.")
+            return
+
+        palette = self.palette()
+        palette.setBrush(QPalette.Window, QBrush(pixmap))
+        self.setPalette(palette)
+
     def select_plant(self, plant_name):
-        self.choosed_plant = plant_name  # Stocker le nom de la plante sélectionnée
+        self.choosed_plant = plant_name
         difficulty, water = self.plant_data[plant_name]
         self.difficulty_label.setText(difficulty)
         self.water_label.setText(water)
         self.next_button.setVisible(True)
-
+        
     def open_new_page(self):
         # Créer une nouvelle fenêtre avec les informations sur la plante
         self.new_window = QWidget()
