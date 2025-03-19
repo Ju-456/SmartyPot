@@ -20,8 +20,8 @@ class MyWindow(QWidget):
             "Basilic": ("Difficulté: ⭐⭐", "Eau: 💧💧"),
             "Menthe": ("Difficulté: ⭐", "Eau: 💧"),
             "Fraise": ("Difficulté: ⭐⭐⭐", "Eau: 💧💧💧"),
-            "Orchidées": ("Difficulté: ⭐⭐", "Eau: 💧💧"),
-            "Bégonias": ("Difficulté: ⭐⭐⭐", "Eau: 💧💧💧")
+            "orchidees": ("Difficulté: ⭐⭐", "Eau: 💧💧"),
+            "Begonias": ("Difficulté: ⭐⭐⭐", "Eau: 💧💧💧")
         }
 
         self.label = QLabel("Sélectionner votre type de plantes :")
@@ -39,8 +39,8 @@ class MyWindow(QWidget):
             "Basilic": "basilic.png",
             "Menthe": "menthe.png",
             "Fraise": "fraise.png",
-            "Orchidées": "orchidées.png",
-            "Bégonias": "begonias.png"
+            "orchidees": "orchidees.png",
+            "Begonias": "begonias.png"
         }
 
         self.plant_buttons = []
@@ -49,7 +49,7 @@ class MyWindow(QWidget):
             button = QPushButton("")
             button.setFixedSize(88, 88)
             image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), image_file)
-
+            print(f"Le chemin de l'image pour {name} est : {image_path}")
             button.setStyleSheet(f"""
                 QPushButton {{
                 border-radius: 44px;
@@ -155,14 +155,14 @@ class MyWindow(QWidget):
         • <b>Entretien :</b> Retirer feuilles jaunies et stolons.<br>
         • <b>Engrais :</b> Compost au printemps et après récolte.<br>"""
 
-        elif self.choosed_plant == "Orchidées":
+        elif self.choosed_plant == "Orchidees":
             details = """• <b>Exposition :</b> Mi-ombre.<br>
         • <b>Arrosage :</b> Modéré.<br>
         • <b>Sol :</b> Riche en humus.<br>
         • <b>Entretien :</b> Tailler les feuilles mortes.<br>
         • <b>Engrais :</b> Compost naturel conseillé.<br>"""
 
-        elif self.choosed_plant == "Bégonias":
+        elif self.choosed_plant == "Begonias":
             details = """• <b>Exposition :</b> Soleil direct.<br>
         • <b>Arrosage :</b> Régulier, mais éviter l’excès d’eau.<br>
         • <b>Sol :</b> Léger et bien drainé.<br>
